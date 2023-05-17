@@ -2,42 +2,40 @@ CC = gcc
 CFLAGS = 
 $(shell mkdir -p lib bin)
 
-pacman: libtextutils.a libplayer.a libpacutils.a libghosts.a libconfigloader.a libmaps.a main.o
-	$(CC) $(CFLAGS) -o bin/pacman main.o -L. lib/libtextutils.a lib/libplayer.a lib/libpacutils.a lib/libghosts.a lib/libconfigloader.a lib/libmaps.a
-	rm -r main.o
+pacman: textutils.so player.so pacutils.so ghosts.so configloader.so maps.so main.o
+	$(CC) $(CFLAGS) -o bin/pacman main.o --std=c11 -Wl,-rpath,. -L. -l./lib/textutils -l./lib/player -l./lib/pacutils -l./lib/ghosts -l./lib/configloader -l./lib/maps
+	rm -r *.o
+
+debug: textutils.so player.so pacutils.so ghosts.so configloader.so maps.so main.o
+	$(CC) $(CFLAGS) -o bin/debug main.o --std=c11 -Ddebug -Wl,-rpath,./lib/ -L./lib/ -ltextutils -lplayer -lpacutils -lghosts -lconfigloader -lmaps
+	rm -r *.o
 
 main.o: main.c
 	$(CC) $(CFLAGS) -c main.c
 
-libconfigloader.a: configloader.c
+configloader.so: configloader.c
 	$(CC) $(CFLAGS) -c configloader.c
-	ar r lib/libconfigloader.a configloader.o
-	rm -r configloader.o
+	$(CC) $(CFLAGS) --shared -o lib/configloader.so configloader.o
 
-libghosts.a: ghosts.c
+ghosts.so: ghosts.c
 	$(CC) $(CFLAGS) -c ghosts.c
-	ar r lib/libghosts.a ghosts.o
-	rm -r ghosts.o
+	$(CC) $(CFLAGS) --shared -o lib/ghosts.so ghosts.o
 
-libmaps.a: maps.c
+maps.so: maps.c
 	$(CC) $(CFLAGS) -c maps.c
-	ar r lib/libmaps.a maps.o
-	rm -r maps.o
+	$(CC) $(CFLAGS) --shared -o lib/maps.so maps.o
 
-libpacutils.a: pacutils.c
+pacutils.so: pacutils.c
 	$(CC) $(CFLAGS) -c pacutils.c
-	ar r lib/libpacutils.a pacutils.o
-	rm -r pacutils.o
+	$(CC) $(CFLAGS) --shared -o lib/pacutils.so pacutils.o
 
-libplayer.a: player.c
+player.so: player.c
 	$(CC) $(CFLAGS) -c player.c
-	ar r lib/libplayer.a player.o
-	rm -r player.o
+	$(CC) $(CFLAGS) --shared -o lib/player.so player.o
 
-libtextutils.a: textutils.c
+textutils.so: textutils.c
 	$(CC) $(CFLAGS) -c textutils.c
-	ar r lib/libtextutils.a textutils.o
-	rm -r textutils.o
+	$(CC) $(CFLAGS) --shared -o lib/textutils.so textutils.o
 
 clean:
 	rm -rf bin

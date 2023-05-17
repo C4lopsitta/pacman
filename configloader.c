@@ -1,3 +1,8 @@
+#include <stdio.h>
+
+#include "defines.h"
+#include "textutils.h"
+
 #include "configloader.h"
 
 void sigintHandler(int i){
