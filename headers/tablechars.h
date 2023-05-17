@@ -22,5 +22,12 @@
 #define T_RIGHT 0x2560
 #define T_BOTTOM 0x2566
 
+#define GHOST 0xf79f
+
+#define PAC_LEFT 0x2b8a
+#define PAC_RIGHT 0x2b88
+#define PAC_UP 0x2b89
+#define PAC_DOWN 0x2b8b
+
 #endif // __TABLECHARS_H__
 

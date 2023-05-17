@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-#include "defines.h"
-#include "textutils.h"
+#include "headers/defines.h"
+#include "headers/textutils.h"
 
-#include "configloader.h"
+#include "headers/configloader.h"
 
 void sigintHandler(int i){
   clearScreen();

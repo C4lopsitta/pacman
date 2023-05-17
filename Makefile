@@ -40,4 +40,5 @@ textutils.so: textutils.c
 clean:
 	rm -rf bin
 	rm -rf lib
+	rm -rf *.o
 

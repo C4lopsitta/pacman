@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <sys/ioctl.h>
 
-#include "textutils.h"
+#include "headers/textutils.h"
 
 void setCursor(int x, int y){
   printf("\033[%d;%dH", x, y);
